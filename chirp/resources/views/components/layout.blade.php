@@ -26,8 +26,15 @@
                 <a href="/" class="btn btn-ghost text-xl">CHIRPER</a>
             </div>
             <div class="navbar-end gap-2">
+            @auth
+                <span class="text-sm">{{ $auth()->user()->name }}</span>
+                <form method="POST" action="/logout" class="inline">
+                    <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
+                </form>
+            @else
                 <a href="/" class="btn btn-ghost btn-sm">Sign In</a>
                 <a href="/" class="btn btn-primary btn-sm">Sign Out</a>
+            @endauth
             </div>
         </nav>
         <main class="flex-1 container mx-auto px-4 py-8">
