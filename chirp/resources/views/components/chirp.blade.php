@@ -32,6 +32,7 @@
                         <span class="text-sm text-base-content/80">Edited</span>
                     @endif
                 </div>
+                @can('update', $chirp)
                 <div class="flex gap-1">
                     <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">Edit</a>
                     <form method="POST" action="/chirps/{{ $chirp->id }}/delete">
@@ -42,6 +43,7 @@
                         class="btn btn-ghost btn-xs text-error">Delete</button>
                     </form>
                 </div>
+                @endcan
             </div>
                 <p class="mt-1">{{ $chirp->message }}</p>
             </div>
