@@ -35,7 +35,7 @@
                 @can('update', $chirp)
                 <div class="flex gap-1">
                     <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">Edit</a>
-                    <form method="POST" action="/chirps/{{ $chirp->id }}/delete">
+                    <form method="POST" action="/chirps/{{ $chirp->id }}">
                         @csrf
                         @method('DELETE')
                         <button type='submit'
