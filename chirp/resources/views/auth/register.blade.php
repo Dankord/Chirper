@@ -5,17 +5,18 @@
 
     <div class="hero min-h-[calc(100vh-16rem)]">
         <div class="hero-content flex-col">
-            <div class="card w-96 bg-base-100">
-                <div clss="card-body"></div>
-                <h1 class="text-3xl font-bold text-center mb-8">Create Account</h1>
+            <div class="card w-96 bg-base-100 items-center p-6">
+                <div class="card-body">
+                    <h1 class="text-3xl font-bold text-center mb-8">Create Account</h1>
                 <form method="POST" action="/register">
+                    @csrf
                     {{-- name --}}
                     <label class="floating-label mb-6">
                         <input type="text"
                                name="name"
                                placeholder="John Doe..."
                                value="{{ old('name') }}"
-                               class="input input-bordered @error('name') input-eror @enderror"
+                               class="input input-bordered @error('name') input-error @enderror"
                                required>
                     </label>
                     @error('name')
@@ -53,9 +54,9 @@
                     {{-- password confirmation --}}
                     <label class="floating-label mb-6">
                         <input type="password"
-                               name="password-confirmation"
+                               name="password_confirmation"
                                placeholder="******"
-                               class="input input-bordered @error('password-confirmation') input-error @enderror"
+                               class="input input-bordered"
                                required>
                     </label>
                     <div class="form-control mt-8">
@@ -69,6 +70,7 @@
                     Already have an existing account?
                     <a href="/login" class="link link-primary">Sign in</a>
                 </p>
+                </div>
             </div>
         </div>
     </div>

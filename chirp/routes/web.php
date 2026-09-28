@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\Register;
 Route::get('/', [ChirpController::class, 'index']);
 Route::view('/register', 'auth.register')->middleware('guest')->name('register');
 Route::post('/register', Register::class)->middleware('guest');
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth'])->group(function() {
     Route::resource('chirps', ChirpController::class)->only(['store', 'edit', 'update', 'destroy']);
 });
 
