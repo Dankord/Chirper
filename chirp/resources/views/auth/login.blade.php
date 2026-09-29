@@ -16,7 +16,7 @@
                         <label class="floating-label mb-8">
                             <input type="email"
                                    name="email"
-                                   placeholder="[mail@example](<mailto:mail@example.com>)"
+                                   placeholder="johndoe@gmail.com"
                                    value="{{ old('email')}}"
                                    class="input input-bordered @error('email') input-error @enderror"
                                    required
