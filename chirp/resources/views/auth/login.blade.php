@@ -1,7 +1,7 @@
 <x-layout>
-    <x-layout:title>
+    <x-slot:title>
         Sign in
-    </x-layout:title>
+    </x-slot:title>
 
     <div class="hero min-h-[calc(100vh-16rem)]">
         <div class="hero-content flex-col">
