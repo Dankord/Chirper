@@ -25,11 +25,12 @@
             <div class="flex justify-between w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : "Anon" }}</span>
+                    <span class="text-xs text-base-content/50">{{ $chirp->user ? '@' . explode('@', $chirp->user->email)[0] : "@Anon"}}</span>
                     <span class="text-base-content/80">.</span>
-                    <span class="text-sm text-base-content/80">{{ $chirp->created_at->diffForHumans() }}</span>
+                    <span class="text-xs text-base-content/80">{{ $chirp->created_at->diffForHumans(['syntax' => \Carbon\Carboninterface::DIFF_ABSOLUTE, 'short' => true]) }}</span>
                     @if($chirp->updated_at->gt( $chirp->created_at->copy()->addSeconds(5) ))
                         <span class="text-base-content/80">.</span>
-                        <span class="text-sm text-base-content/80">Edited</span>
+                        <span class="text-xs text-base-content/80">Edited</span>
                     @endif
                 </div>
                 @can('update', $chirp)
