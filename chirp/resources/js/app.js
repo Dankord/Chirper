@@ -1,1 +1,1 @@
-//
+import './timeline-tabs';
