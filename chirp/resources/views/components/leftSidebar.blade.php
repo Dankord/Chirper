@@ -11,8 +11,13 @@
 <div class="flex justify-center mt-5">
     <div class="flex w-60 flex-col gap-2">
         @foreach($navigations as $item)
+            @php
+                $isActive = $item['url'] === '/'
+                    ? request()->is('/')
+                    : request()->is(ltrim($item['url'], '/'));
+            @endphp
             <a href="{{ $item['url'] }}"
-                class="btn btn-ghost rounded-xl border-0 hover:text-white hover:bg-black justify-start gap-5">
+                class="btn rounded-xl border-0 justify-start gap-5 {{ $isActive ? 'bg-black text-white' : 'btn-ghost hover:bg-black hover:text-white'}}">
                 <x-dynamic-component :component="'lucide-' . $item['icon']" class="size-5"/>
                 <span>{{ $item['title'] }}</span>
             </a>
