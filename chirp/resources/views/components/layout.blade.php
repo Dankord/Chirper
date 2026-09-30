@@ -21,7 +21,7 @@
             </div>
         </div>
     @endif
-        <nav class="navbar bg-base-100">
+        <nav class="navbar bg-base-100 sticky top-0 z-20">
             <div class="navbar-start">
                 <a href="/" class="btn btn-ghost text-xl">CHIRPER</a>
             </div>
@@ -37,7 +37,7 @@
             @endauth
             </div>
         </nav>
-        <main class="flex-1 container mx-auto px-4 py-8 bg-red-500">
+        <main class="flex-1 container mx-auto px-4 py-8">
             {{  $slot }}
         </main>
         <footer class="footer footer-center p-5 bg-base-300 text-base-content text-xs">

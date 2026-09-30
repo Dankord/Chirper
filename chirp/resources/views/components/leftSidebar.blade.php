@@ -8,7 +8,7 @@
     ];
 @endphp
 
-<div class="flex justify-end">
+<div class="flex justify-center mt-5">
     <div class="flex w-60 flex-col gap-2">
         @foreach($navigations as $item)
             <a href="{{ $item['url'] }}"
@@ -17,5 +17,17 @@
                 <span>{{ $item['title'] }}</span>
             </a>
         @endforeach
+        <div class="mt-5">
+            <a class="btn btn-primary rounded-xl w-full bg-amber-300 hover:bg-amber-500 text-black border-0 gap-2">
+                <x-dynamic-component component="lucide-pencil" class="size-4"/>
+                <span>Chirp</span>
+            </a>
+        </div>
+        <div class="card bg-base-100 shadow mt-5">
+            <div class="card-body">
+                <h3 class="font-bold text-md">Make your feed yours!</h3>
+                <p class="text-xs text-base-content/80">Follow people and topics you care about to personalize your timeline.</p>
+            </div>
+        </div>
     </div>
 </div>
