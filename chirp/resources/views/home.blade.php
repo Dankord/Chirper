@@ -14,7 +14,7 @@
         </div>
         <aside class='p-4 bg-green-300'>
             <div class="sticky top-20">
-                {{-- right-sidebar --}}
+                <x-rightSideBar />
             </div>
         </aside>
     </div>
