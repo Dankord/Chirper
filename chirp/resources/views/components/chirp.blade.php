@@ -17,7 +17,7 @@
                         <img src="https://avatars.laravel.cloud/f61123d5-0b27-434c-a4ae-c653c7fc9ed6?vibe=stealth"
                             alt="anonymous user"
                             class="rounded-full"/>
-                    </div>
+                    </div> 
                 </div>
             @endif
 
