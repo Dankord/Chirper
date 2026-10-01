@@ -40,10 +40,5 @@
         <main class="flex-1 container mx-auto px-4 py-8">
             {{  $slot }}
         </main>
-        <footer class="footer footer-center p-5 bg-base-300 text-base-content text-xs">
-            <div>
-                <p>@ {{date('Y')}} Chirper - Built with Laravel</p>
-            </div>
-        </footer>
     </body>
 </html>

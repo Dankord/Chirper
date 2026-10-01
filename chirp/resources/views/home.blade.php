@@ -12,7 +12,7 @@
         <div class="max-w-3xl w-full mx-auto">
             <x-timeline :chirps="$chirps"/>
         </div>
-        <aside class='p-4 bg-green-300'>
+        <aside class='p-4'>
             <div class="sticky top-20">
                 <x-rightSideBar />
             </div>
