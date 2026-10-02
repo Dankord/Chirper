@@ -1,4 +1,4 @@
-@props(['chirps'])
+@props(['chirps', 'likedChirpIds'])
 
 <h3 class="text-md font-light font text-base-content/50">Your Timeline</h3>
     <h1 class="text-3xl font-extrabold mt-1">Latest Chirps</h1>
@@ -36,7 +36,10 @@
         {{-- Feed --}}
         <div class="space-y-4 mt-8">
             @forelse($chirps as $chirp)
-            <x-chirp :chirp="$chirp"/>
+            <x-chirp
+                :chirp="$chirp"
+                :liked-chirp-ids="$likedChirpIds"
+            />
             @empty
             <div class="hero p-y-12">
                 <div class="hero-content text-center">

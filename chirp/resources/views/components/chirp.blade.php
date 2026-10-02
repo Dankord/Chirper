@@ -1,4 +1,7 @@
-@props(['chirp'])
+@props(['chirp', 'likedChirpIds'])
+@php
+    $isLiked = isset($likedChirpIds[$chirp->id]);
+@endphp
 
 <div class="card bg-base-100 shadow">
     <div class="card-body">
@@ -17,7 +20,7 @@
                         <img src="https://avatars.laravel.cloud/f61123d5-0b27-434c-a4ae-c653c7fc9ed6?vibe=stealth"
                             alt="anonymous user"
                             class="rounded-full"/>
-                    </div> 
+                    </div>
                 </div>
             @endif
 
@@ -48,17 +51,13 @@
                 </div>
                     <p class="mt-1">{{ $chirp->message }}</p>
                     <div class="w-full">
-                        <form method="POST" action="{{ route('chirps.like', $chirp)}}">
+                        <form method="POST" action="{{ route('chirps.like', $chirp)}}" class="like-form">
                             @csrf
                             <button type="submit"
-                                    class="btn btn-ghost btn-sm py-0 h-auto mt-3 text-base-content/60">
-                                @if($chirp->likedByUsers->contains( auth()->id() ))
-                                    <x-lucide-heart class="size-3 fill-current text-red-500" />
-                                @else
-                                    <x-lucide-heart class="size-3" />
-                                @endif
-                                <span>
-                                    {{ $chirp->likedbyUsers->count() }}
+                                    class="btn btn-ghost btn-sm py-0 h-auto mt-3 text-base-content/60 like-button">
+                                    <x-lucide-heart class="size-4 like-icon {{ $isLiked ? 'fill-current text-red-500' : ''}}" />
+                                <span class="like-count">
+                                    {{ $chirp->liked_by_users_count }}
                                 </span>
                             </button>
                         </form>

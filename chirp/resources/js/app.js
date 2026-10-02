@@ -1,2 +1,2 @@
 import './timeline-tabs';
-// import './likes';
+import './like';

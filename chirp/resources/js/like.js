@@ -16,7 +16,7 @@ document.querySelectorAll('.like-form').forEach((form) => {
                 icon.classList.remove('fill-current', 'text-red-500')
             }
 
-            const textContent = data.count;
+            count.textContent = data.count;
         } catch(error) {
             console.error(error);
         }
