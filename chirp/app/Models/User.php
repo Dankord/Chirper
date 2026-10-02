@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -33,5 +34,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function chirps(): HasMany
     {
         return $this->hasMany(Chirp::class);
+    }
+    public function likedChirps(): BelongsToMany {
+        return $this->belongsToMany(Chirp::class, 'likes')->withTimestamps();
     }
 }

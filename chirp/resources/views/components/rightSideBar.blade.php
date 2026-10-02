@@ -28,14 +28,13 @@
                 <div class="flex font-bold gap-2 items-center">
                     <span><x-lucide-users class="size-4" /></span>
                     <h2 class="text-[16px]">Who to follow</h2>
-                    {{-- Make the follow avatar, img, name email and follow button --}}
                 </div>
 
                 <div class="flex items-center justify-between">
                     <div class="flex pt-2">
                         <div class="avatar placeholder">
                             <div class="size-10 rounded-full">
-                                <img src="https://avatars.laravel.cloud/f61123d5-0b27-434c-a4ae-c653c7fc9ed6?vibe=stealth" 
+                                <img src="https://avatars.laravel.cloud/f61123d5-0b27-434c-a4ae-c653c7fc9ed6?vibe=stealth"
                                     alt="Anonymous"
                                     class="rounded-full" />
                             </div>
@@ -46,7 +45,7 @@
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn-primary rounded-3xl">Follow</button>
+                        <button class="btn btn-primary rounded-3xl py-0 h-auto">Follow</button>
                     </div>
                 </div>
             </div>
