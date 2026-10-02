@@ -22,31 +22,47 @@
             @endif
 
             <div class="min-w-0 flex-1">
-            <div class="flex justify-between w-full">
-                <div class="flex items-center gap-3">
-                    <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : "Anon" }}</span>
-                    <span class="text-xs text-base-content/50">{{ $chirp->user ? '@' . explode('@', $chirp->user->email)[0] : "@Anon"}}</span>
-                    <span class="text-base-content/80">.</span>
-                    <span class="text-xs text-base-content/80">{{ $chirp->created_at->diffForHumans(['syntax' => \Carbon\Carboninterface::DIFF_ABSOLUTE, 'short' => true]) }}</span>
-                    @if($chirp->updated_at->gt( $chirp->created_at->copy()->addSeconds(5) ))
+                <div class="flex justify-between w-full">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : "Anon" }}</span>
+                        <span class="text-xs text-base-content/50">{{ $chirp->user ? '@' . explode('@', $chirp->user->email)[0] : "@Anon"}}</span>
                         <span class="text-base-content/80">.</span>
-                        <span class="text-xs text-base-content/80">Edited</span>
-                    @endif
+                        <span class="text-xs text-base-content/80">{{ $chirp->created_at->diffForHumans(['syntax' => \Carbon\Carboninterface::DIFF_ABSOLUTE, 'short' => true]) }}</span>
+                        @if($chirp->updated_at->gt( $chirp->created_at->copy()->addSeconds(5) ))
+                            <span class="text-base-content/80">.</span>
+                            <span class="text-xs text-base-content/80">Edited</span>
+                        @endif
+                    </div>
+                    @can('update', $chirp)
+                    <div class="flex gap-1">
+                        <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">Edit</a>
+                        <form method="POST" action="/chirps/{{ $chirp->id }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type='submit'
+                            onclick=" return confirm('Are you sure you want to delete this chirp message?')"
+                            class="btn btn-ghost btn-xs text-error">Delete</button>
+                        </form>
+                    </div>
+                    @endcan
                 </div>
-                @can('update', $chirp)
-                <div class="flex gap-1">
-                    <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">Edit</a>
-                    <form method="POST" action="/chirps/{{ $chirp->id }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type='submit'
-                        onclick=" return confirm('Are you sure you want to delete this chirp message?')"
-                        class="btn btn-ghost btn-xs text-error">Delete</button>
-                    </form>
-                </div>
-                @endcan
-            </div>
-                <p class="mt-1">{{ $chirp->message }}</p>
+                    <p class="mt-1">{{ $chirp->message }}</p>
+                    <div class="w-full">
+                        <form method="POST" action="{{ route('chirps.like', $chirp)}}">
+                            @csrf
+                            <button type="submit"
+                                    class="btn btn-ghost btn-sm py-0 h-auto mt-3 text-base-content/60">
+                                @if($chirp->likedByUsers->contains( auth()->id() ))
+                                    <x-lucide-heart class="size-3 fill-current text-red-500" />
+                                @else
+                                    <x-lucide-heart class="size-3" />
+                                @endif
+                                <span>
+                                    {{ $chirp->likedbyUsers->count() }}
+                                </span>
+                            </button>
+                        </form>
+                    </div>
             </div>
         </div>
     </div>
