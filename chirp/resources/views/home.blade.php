@@ -10,7 +10,10 @@
         </aside>
         {{-- Timeline --}}
         <div class="max-w-3xl w-full mx-auto">
-            <x-timeline :chirps="$chirps"/>
+            <x-timeline
+                :chirps="$chirps"
+                :liked-chirp-ids="$likedChirpIds"
+            />
         </div>
         <aside class='p-4'>
             <div class="sticky top-20">
