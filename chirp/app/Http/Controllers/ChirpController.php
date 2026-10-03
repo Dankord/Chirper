@@ -15,11 +15,13 @@ class ChirpController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        $likedChirpIds = $user
+        $likedChirpIds = $user ?
+            $user
             ->likedChirps()
             ->whereIn('chirp_id', $chirp->pluck('id'))
             ->pluck('chirp_id')
-            ->flip();
+            ->flip()
+        : collect();
 
         return view('home', [
             'chirps' => $chirp,
