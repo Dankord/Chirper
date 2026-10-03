@@ -54,8 +54,8 @@
                         <form method="POST" action="{{ route('chirps.like', $chirp)}}" class="like-form">
                             @csrf
                             <button type="submit"
-                                    class="btn btn-ghost btn-sm py-0 h-auto mt-3 text-base-content/60 like-button">
-                                    <x-lucide-heart class="size-4 like-icon {{ $isLiked ? 'fill-current text-red-500' : ''}}" />
+                                    class="btn btn-ghost btn-sm py-0 h-auto mt-3 text-base-content/40 like-button">
+                                <x-lucide-heart class="size-4 like-icon {{ $isLiked ? 'fill-current text-red-500' : ''}}" />
                                 <span class="like-count">
                                     {{ $chirp->liked_by_users_count }}
                                 </span>

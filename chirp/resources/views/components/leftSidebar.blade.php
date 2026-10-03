@@ -1,10 +1,10 @@
 @php
     $navigations = [
-        ['title' => 'Home', 'icon' => 'house', 'url' => '/'],
-        ['title' => 'Explore', 'icon' => 'compass', 'url' => '/explore'],
-        ['title' => 'Notifications', 'icon' => 'bell', 'url' => '/notif'],
-        ['title' => 'Bookmarks', 'icon' => 'bookmark', 'url' => '/bookmark'],
-        ['title' => 'Profile', 'icon' => 'user-round', 'url' => '/profile']
+        ['title' => 'Home', 'icon' => 'house', 'route' => 'home'],
+        ['title' => 'Explore', 'icon' => 'compass', 'route' => 'explore'],
+        ['title' => 'Notifications', 'icon' => 'bell', 'route' => 'notifications'],
+        ['title' => 'Bookmarks', 'icon' => 'bookmark', 'route' => 'bookmarks'],
+        ['title' => 'Profile', 'icon' => 'user-round', 'route' => 'profile']
     ];
 @endphp
 
@@ -12,11 +12,9 @@
     <div class="flex w-60 flex-col gap-2">
         @foreach($navigations as $item)
             @php
-                $isActive = $item['url'] === '/'
-                    ? request()->is('/')
-                    : request()->is(ltrim($item['url'], '/'));
+                $isActive = request()->routeIs($item['route']);
             @endphp
-            <a href="{{ $item['url'] }}"
+            <a href="{{ route($item['route']) }}"
                 class="btn rounded-xl border-0 justify-start gap-5 {{ $isActive ? 'bg-black text-white' : 'btn-ghost hover:bg-black hover:text-white'}}">
                 <x-dynamic-component :component="'lucide-' . $item['icon']" class="size-5"/>
                 <span>{{ $item['title'] }}</span>
