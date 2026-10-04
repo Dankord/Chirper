@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Chirp;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class ChirpController extends Controller
 {
@@ -70,5 +71,32 @@ class ChirpController extends Controller
 
         $chirp->delete();
         return redirect('/')->with('success', 'Successfully Deleted!');
+    }
+
+    public function profile(User $user) {
+        // The user profile we visit/viewing
+        $userChirp = $user->chirps()
+            ->with('user')
+            ->withCount('likedByUsers')
+            ->latest()
+            ->get();
+
+        // Current user viewing ther profile
+        /** @var \App\Models\User $currentUser */
+        $currentUser = Auth::user();
+
+        $likedChirpIds = $currentUser ?
+            $currentUser
+            ->likedChirps()
+            ->whereIn('chirp_id', $userChirp->pluck('id'))
+            ->pluck('chirp_id')
+            ->flip()
+            : collect();
+
+        return view('profile.profile', [
+            'user' => $user,
+            'chirps' => $userChirp,
+            'likedChirpIds' => $likedChirpIds
+        ]);
     }
 }

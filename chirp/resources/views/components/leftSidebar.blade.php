@@ -4,7 +4,7 @@
         ['title' => 'Explore', 'icon' => 'compass', 'route' => 'explore'],
         ['title' => 'Notifications', 'icon' => 'bell', 'route' => 'notifications'],
         ['title' => 'Bookmarks', 'icon' => 'bookmark', 'route' => 'bookmarks'],
-        ['title' => 'Profile', 'icon' => 'user-round', 'route' => 'profile']
+        ['title' => 'Profile', 'icon' => 'user-round', 'route' => 'profile', 'params' => ['user' => auth()->user()]]
     ];
 @endphp
 
@@ -14,7 +14,7 @@
             @php
                 $isActive = request()->routeIs($item['route']);
             @endphp
-            <a href="{{ route($item['route']) }}"
+            <a href="{{ route($item['route'], $item['params'] ?? []) }}"
                 class="btn rounded-xl border-0 justify-start gap-5 {{ $isActive ? 'bg-black text-white' : 'btn-ghost hover:bg-black hover:text-white'}}">
                 <x-dynamic-component :component="'lucide-' . $item['icon']" class="size-5"/>
                 <span>{{ $item['title'] }}</span>

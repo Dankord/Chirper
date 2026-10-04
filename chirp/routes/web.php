@@ -18,7 +18,8 @@ Route::post('/logout', Logout::class)->middleware('auth')->name('logout');
 Route::middleware(['auth'])->group(function() {
     Route::resource('chirps', ChirpController::class)->only(['store', 'edit', 'update', 'destroy']);
     Route::post('/chirps/{chirp}/like', [LikeController::class, 'toggle'])->name('chirps.like');
-    Route::view('/profile', 'profile.profile')->name('profile');
+    Route::get('/profile/{user}', [ChirpController::class, 'profile'])->name('profile');
+
     Route::view('/explore', function() {
         return 'explore';
     })->name('explore');
