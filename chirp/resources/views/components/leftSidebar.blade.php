@@ -4,8 +4,23 @@
         ['title' => 'Explore', 'icon' => 'compass', 'route' => 'explore'],
         ['title' => 'Notifications', 'icon' => 'bell', 'route' => 'notifications'],
         ['title' => 'Bookmarks', 'icon' => 'bookmark', 'route' => 'bookmarks'],
-        ['title' => 'Profile', 'icon' => 'user-round', 'route' => 'profile', 'params' => ['user' => auth()->user()]]
     ];
+
+    if(auth()->check()) {
+        $navigations[] = [
+            'title' => 'Profile',
+            'icon' => 'user-round',
+            'route' => 'profile',
+            'params' => ['user' => auth()->user()]
+        ];
+    } else {
+        $navigations[] = [
+            'title' => 'Profile',
+            'icon' => 'user-round',
+            'route' => 'login',
+            'params' => [],
+        ];
+    }
 @endphp
 
 <div class="flex justify-center mt-5">
