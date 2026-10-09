@@ -12,21 +12,37 @@
             </div>
             <div class="absolute left-8 -bottom-16">
                 <img
-                    src="https://avatars.laravel.cloud/{{ urlencode(Auth::user()->email) }}"
-                    alt="{{ Auth::user()->name }}"
+                    src="https://avatars.laravel.cloud/{{ urlencode($user->email) }}"
+                    alt="{{ $user->email }}"
                     class="w-32 h-32 rounded-full border-4 border-base-100 object-cover"
                 />
             </div>
         </div>
         {{-- Information --}}
-        <div class="pt-18 px-8 pb-6 text-start bg-base-100">
-            <div class="">
-                <h1 class="font-bold text-2xl leading-none">{{ Auth::user()->name }}</h1>
-                <span class="pt-0 text-xs text-base-content/50">{{ Auth::user() ? '@' . explode('@', Auth::user()->email)[0] : "@Anon"}}</span>
+        <div class="px-8 pb-6 text-start bg-base-100">
+            <div class="flex justify-end pt-3">
+                @if (auth()->id() === $user->id)
+                    <button type="button"
+                            onclick="document.getElementById('edit_profile_modal').showModal()"
+                            class="btn btn-primary btn-sm rounded-lg px-5 font-semibold hover:bg-black/70 border-none">
+                        Edit profile
+                    </button>
+                @else
+                    <button type="button"
+                            class="btn btn-primary btn-sm rounded-lg px-5 font-semibold hover:bg-black/70 border-none">
+                        Follow
+                    </button>
+                @endif
+            </div>
+            <div class="pt-8">
+                <h1 class="font-bold text-2xl leading-none">{{ $user->name }}</h1>
+                <span class="pt-0 text-xs text-base-content/50">{{ $user->email ? '@' . explode('@', $user->email)[0] : "@Anon"}}</span>
                 {{-- Add some informaiton here would you --}}
             </div>
         </div>
-
+        @if (auth()->id() === $user->id)
+            <x-profile.edit-profile-modal :user="$user" :profile="$profile" />
+        @endif
         {{-- Chirpers --}}
         <div class="mt-8 space-y-4">
             @forelse($chirps as $chirp)
