@@ -96,7 +96,8 @@ class ChirpController extends Controller
         return view('profile.profile', [
             'user' => $user,
             'chirps' => $userChirp,
-            'likedChirpIds' => $likedChirpIds
+            'likedChirpIds' => $likedChirpIds,
+            'profile' => $user->profile()->firstOrCreate()
         ]);
     }
 }
