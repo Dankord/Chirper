@@ -15,7 +15,7 @@
 {{--        Form--}}
         <form
             method="POST"
-{{--            action="{{ route('profile.update'), $user }}"--}}>
+            action="{{ route('profile.update', $user) }}"
             @csrf
             @method('PATCH')
 
