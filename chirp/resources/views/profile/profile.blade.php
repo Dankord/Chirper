@@ -38,6 +38,12 @@
                 <h1 class="font-bold text-2xl leading-none">{{ $user->name }}</h1>
                 <span class="pt-0 text-xs text-base-content/50">{{ $user->email ? '@' . explode('@', $user->email)[0] : "@Anon"}}</span>
                 {{-- Add some informaiton here would you --}}
+                <h3 class="py-5">{{ $user->profile->bio }}</h3>
+                <div class="flex gap-5">
+                    <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-map-pin class="size-4"/>{{ $user->profile->address }}</span>
+                    <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-building-complex class="size-4" />{{$user->profile->occupation }}</span>
+                    <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-calendar class="size-4" />Joined {{ $user->created_at->format('M, Y') }}</span>
+                </div>
             </div>
         </div>
         @if (auth()->id() === $user->id)
