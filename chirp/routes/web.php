@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FollowController;
 
 Route::get('/', [ChirpController::class, 'index'])->name('home');
 Route::view('/register', 'auth.register')->middleware('guest')->name('register');
@@ -17,11 +18,18 @@ Route::post('/login', Login::class)->middleware('guest');
 Route::post('/logout', Logout::class)->middleware('auth')->name('logout');
 
 Route::middleware(['auth'])->group(function() {
+    // Chirp logic
     Route::resource('chirps', ChirpController::class)->only(['store', 'edit', 'update', 'destroy']);
     Route::post('/chirps/{chirp}/like', [LikeController::class, 'toggle'])->name('chirps.like');
+
+    // Profile logic
     Route::get('/profile/{user}', [ChirpController::class, 'profile'])->name('profile');
     Route::patch('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
+    // Follow logic
+    Route::post('/users/{user}/follow', [FollowController::class, 'toggle'])->name('users.follow');
+
+    // Upcoming
     Route::view('/explore', function() {
         return 'explore';
     })->name('explore');

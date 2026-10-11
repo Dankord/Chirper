@@ -5,7 +5,7 @@
         <div class="relative grid grid-cols-2 rounded-full bg-base-100 p-1 mt-4 shadow">
             <div id="tab-slider" class="absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-full bg-black shadow-sm transition-transform duration-200 ease-in-out"></div>
             <a data-tab="for-you" class="relative z-10 rounded-full py-1 text-center font-semibold text-base-content/60">For you</a>
-            <a data-tab="following" class="relative z-10 rounded-full py-1 text-center font-semibold text-base-content/60">Following </a>
+            <a data-tab="following" class="relative z-10 rounded-full py-1 text-center font-semibold text-base-content/60">Following</a>
         </div>
         <div class="card bg-base-100 shadow mt-4">
             <div class="card-body">
