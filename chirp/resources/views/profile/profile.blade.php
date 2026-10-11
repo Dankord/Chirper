@@ -21,17 +21,19 @@
         {{-- Information --}}
         <div class="px-8 pb-6 text-start bg-base-100">
             <div class="flex justify-end pt-3">
-                @if (auth()->id() === $user->id)
+                @if (auth()->check() && auth()->id() === $user->id)
                     <button type="button"
                             onclick="document.getElementById('edit_profile_modal').showModal()"
                             class="btn btn-primary btn-sm rounded-lg px-5 font-semibold hover:bg-black/70 border-none">
                         Edit profile
                     </button>
                 @else
-                    <button type="button"
-                            class="btn btn-primary btn-sm rounded-lg px-5 font-semibold hover:bg-black/70 border-none">
-                        Follow
-                    </button>
+                    <form action="{{ route('users.follow', $user) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-sm rounded-lg px-5 font-semibold hover:bg-black/70 border-none">
+                            Follow
+                        </button>
+                    </form>
                 @endif
             </div>
             <div class="pt-8">
