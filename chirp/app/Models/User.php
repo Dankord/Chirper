@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
             User::class,
             'follows',
             'following_id',
-            'followers_id'
+            'follower_id'
         )->withTimestamps();
     }
 }

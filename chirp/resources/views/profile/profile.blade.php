@@ -28,10 +28,16 @@
                         Edit profile
                     </button>
                 @else
-                    <form action="{{ route('users.follow', $user) }}" method="POST">
+                @php
+                    $isFollowing = auth()->check()
+                                && auth()->user()->following()
+                                   ->whereKey($user->id)
+                                   ->exists();
+                @endphp
+                    <form action="{{ route('users.follow', $user) }}" method="POST" class="follow-form">
                         @csrf
-                        <button type="submit" class="btn btn-primary btn-sm rounded-lg px-5 font-semibold hover:bg-black/70 border-none">
-                            Follow
+                        <button type="submit" class="follow-button btn btn-sm rounded-lg px-5 font-semibold border-none {{ $isFollowing ? 'btn-ghost hover:bg-base-200' : 'btn-primary hover:bg-black/70'}}" aria-pressed="{{ $isFollowing ? 'true' : 'false'}}">
+                            <span class="follow-label">{{ $isFollowing ? 'Following' : 'Follow'}}</span>
                         </button>
                     </form>
                 @endif
