@@ -75,6 +75,8 @@ class ChirpController extends Controller
 
     public function profile(User $user) {
         // The user profile we visit/viewing
+        $user->loadCount(['followers', 'following']);
+
         $userChirp = $user->chirps()
             ->with('user')
             ->withCount('likedByUsers')
