@@ -42,16 +42,21 @@
                     </form>
                 @endif
             </div>
+            {{-- Information --}}
             <div class="pt-8">
                 <h1 class="font-bold text-2xl leading-none">{{ $user->name }}</h1>
                 <span class="pt-0 text-xs text-base-content/50">{{ $user->email ? '@' . explode('@', $user->email)[0] : "@Anon"}}</span>
-                {{-- Add some informaiton here would you --}}
-                <h3 class="py-5">{{ $user->profile->bio }}</h3>
+                <h3 class="py-5">{{ $user->profile->bio ?? 'User left no bio yet.' }}</h3>
                 <div class="flex gap-5">
-                    <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-map-pin class="size-4"/>{{ $user->profile->address }}</span>
-                    <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-building-complex class="size-4" />{{$user->profile->occupation }}</span>
+                    <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-map-pin class="size-4"/>{{ $user->profile->address ?? 'Not specified yet' }}</span>
+                    <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-building-complex class="size-4" />{{$user->profile->occupation ?? 'Not specified yet' }}</span>
                     <span class="text-base-content/60 text-xs flex items-center gap-1"><x-lucide-calendar class="size-4" />Joined {{ $user->created_at->format('M, Y') }}</span>
                 </div>
+            </div>
+            {{-- Follow list --}}
+            <div class="flex gap-4 pt-5">
+                <h2 class="font-bold text-xs">{{ $user->following_count }}<span class="pl-1 text-base-content/50 font-medium">Following</span></h2>
+                <h2 class="font-bold text-xs">{{ $user->followers_count }}<span class="pl-1 text-base-content/50 font-medium">Followers</span></h2>
             </div>
         </div>
         @if (auth()->id() === $user->id)
