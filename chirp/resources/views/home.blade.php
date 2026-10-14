@@ -18,7 +18,9 @@
         </div>
         <aside class='p-4'>
             <div class="sticky top-20">
-                <x-rightSideBar />
+                <x-rightSideBar
+                    :suggestedUsers="$suggestedUsers"
+                />
             </div>
         </aside>
     </div>

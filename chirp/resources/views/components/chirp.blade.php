@@ -27,7 +27,7 @@
             <div class="min-w-0 flex-1">
                 <div class="flex justify-between w-full">
                     <div class="flex items-center gap-3">
-                        <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : "Anon" }}</span>
+                        <a href="{{ route('profile', $chirp->user )}}" class="text-sm font-semibold hover:underline">{{ $chirp->user ? $chirp->user->name : "Anon" }}</a>
                         <span class="text-xs text-base-content/50">{{ $chirp->user ? '@' . explode('@', $chirp->user->email)[0] : "@Anon"}}</span>
                         <span class="text-base-content/80">.</span>
                         <span class="text-xs text-base-content/80">{{ $chirp->created_at->diffForHumans(['syntax' => \Carbon\Carboninterface::DIFF_ABSOLUTE, 'short' => true]) }}</span>
