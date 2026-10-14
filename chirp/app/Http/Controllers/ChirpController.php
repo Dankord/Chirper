@@ -11,21 +11,44 @@ class ChirpController extends Controller
 {
     public function index()
     {
-        $chirp = Chirp::with('user')->withCount('likedByUsers')->latest()->take(50)->get();
+        // For you
+        $forYouChirps = Chirp::with('user')
+            ->withCount('likedByUsers')
+            ->latest()
+            ->take(50)
+            ->get();
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
+        $followingChirps = $user
+            ? Chirp::whereIn(
+                'user_id',
+                $user->following()->select('users.id')
+            )
+            ->with('user')
+            ->withCount('likedByUsers')
+            ->latest()
+            ->take(50)
+            ->get()
+            : collect();
+
+        $chirpIds = $forYouChirps
+            ->concat($followingChirps)
+            ->pluck('id')
+            ->unique();
+
         $likedChirpIds = $user ?
             $user
             ->likedChirps()
-            ->whereIn('chirp_id', $chirp->pluck('id'))
+            ->whereIn('chirp_id', $chirpIds)
             ->pluck('chirp_id')
             ->flip()
         : collect();
 
         return view('home', [
-            'chirps' => $chirp,
+            'forYouChirps' => $forYouChirps,
+            'followingChirps' => $followingChirps,
             'likedChirpIds' => $likedChirpIds,
         ]);
     }

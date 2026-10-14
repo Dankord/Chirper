@@ -1,11 +1,25 @@
-@props(['chirps', 'likedChirpIds'])
+@props(['forYouChirps', 'followingChirps', 'likedChirpIds'])
 
 <h3 class="text-md font-light font text-base-content/50">Your Timeline</h3>
     <h1 class="text-3xl font-extrabold mt-1">Latest Chirps</h1>
         <div class="relative grid grid-cols-2 rounded-full bg-base-100 p-1 mt-4 shadow">
             <div id="tab-slider" class="absolute bottom-1 left-1 top-1 w-[calc(50%-4px)] rounded-full bg-black shadow-sm transition-transform duration-200 ease-in-out"></div>
-            <a data-tab="for-you" class="relative z-10 rounded-full py-1 text-center font-semibold text-base-content/60">For you</a>
-            <a data-tab="following" class="relative z-10 rounded-full py-1 text-center font-semibold text-base-content/60">Following</a>
+            <button
+                type="button"
+                data-tab="for-you"
+                aria-pressed="true"
+                class="relative z-10 rounded-full py-1 text-center font-semibold text-base-content/60"
+            >
+                For you
+            </button>
+            <button
+                type="button"
+                data-tab="following"
+                aria-pressed="false"
+                class="relative z-10 rounded-full py-1 text-center font-semibold text-base-content/60"
+            >
+                Following
+            </button>
         </div>
         <div class="card bg-base-100 shadow mt-4">
             <div class="card-body">
@@ -34,8 +48,9 @@
             </div>
         </div>
         {{-- Feed --}}
-        <div class="space-y-4 mt-8">
-            @forelse($chirps as $chirp)
+        {{-- For you tab --}}
+        <div id="for-you" class="space-y-4 mt-8">
+            @forelse($forYouChirps as $chirp)
             <x-chirp
                 :chirp="$chirp"
                 :liked-chirp-ids="$likedChirpIds"
@@ -48,6 +63,26 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                         </svg>
                         <p class="mt-4 text-base-content/60">No chirps yet. Be the first to chirp!</p>
+                    </div>
+                </div>
+            </div>
+            @endforelse
+        </div>
+        {{-- Following tab --}}
+        <div id="following" class="space-y-4 mt-8">
+            @forelse($followingChirps as $chirp)
+            <x-Chirp
+                :chirp="$chirp"
+                :liked-chirp-ids="$likedChirpIds"
+            />
+            @empty
+            <div class="hero p-y-12">
+                <div class="hero-content text-center">
+                    <div>
+                        <svg class="mx-auto h-12 w-12 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                        <p class="mt-4 text-base-content/60">No  chirps from people you follow yet.</p>
                     </div>
                 </div>
             </div>
