@@ -1,3 +1,5 @@
+@props(['suggestedUsers'])
+
 <div class="flex justify-center mt-5">
     <div class="flex flex-col gap-3 w-80">
         <div class="shadow">
@@ -23,6 +25,7 @@
                 <p class="text-xs text-base-content/60 m-0">12.4k chirps</p>
             </div>
         </div>
+        {{-- Follow list --}}
         <div class="card pt-5">
             <div class="card-body bg-base-100 rounded-xl shadow">
                 <div class="flex font-bold gap-2 items-center">
@@ -30,23 +33,35 @@
                     <h2 class="text-[16px]">Who to follow</h2>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <div class="flex pt-2">
-                        <div class="avatar placeholder">
-                            <div class="size-10 rounded-full">
-                                <img src="https://avatars.laravel.cloud/f61123d5-0b27-434c-a4ae-c653c7fc9ed6?vibe=stealth"
-                                    alt="Anonymous"
-                                    class="rounded-full" />
+                <div class="flex flex-col gap-4 mt-3">
+                    @forelse($suggestedUsers as $suggestedUser)
+                        <div class="flex items-center justify-between gap-2" wire:key="suggested-user-{{$suggestedUser->id}}">
+                            <div class="flex pt-2">
+                                <div class="avatar placeholder">
+                                    <div class="size-10 rounded-full">
+                                        <img src="https://avatars.laravel.cloud/{{ urlencode( $suggestedUser->email ) }}"
+                                             alt="{{ $suggestedUser->name }} profile picture"
+                                             class="rounded-full"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="ml-2 min-w-0">
+                                    <a href="{{ route('profile', $suggestedUser)}}" class="font-bold text-sm truncate block hover:underline">{{ $suggestedUser->name }}</a>
+                                    <p class="text-xs text-base-content/60 truncate">{{ $suggestedUser->email ? '@' . explode('@', $suggestedUser->email)[0] : '@anon' }}</p>
+                                </div>
                             </div>
+                            <form method="POST" action="{{ route( 'users.follow', $suggestedUser ) }}" class="follow-form shrink-0">
+                                @csrf
+                                <button type="submit" class="follow-button btn btn-primary btn-sm rounded-3xl" aria-pressed="false">
+                                    <span class="follow-label">Follow</span>
+                                </button>
+                            </form>
                         </div>
-                        <div class="ml-2">
-                            <h2 class="font-bold">John Kervin Ganzon</h2>
-                            <p class="text-xs text-base-content/60">@john</p>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary rounded-3xl py-0 h-auto">Follow</button>
-                    </div>
+                    @empty
+                        <p class="text-sm text-base-content/70 py-2">
+                            No new people to follow right now.
+                        </p>
+                    @endforelse
                 </div>
             </div>
         </div>

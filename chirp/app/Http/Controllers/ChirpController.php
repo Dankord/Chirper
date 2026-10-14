@@ -21,6 +21,7 @@ class ChirpController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
+        // following
         $followingChirps = $user
             ? Chirp::whereIn(
                 'user_id',
@@ -32,7 +33,7 @@ class ChirpController extends Controller
             ->take(50)
             ->get()
             : collect();
-
+        // pluck the ids of the chirps
         $chirpIds = $forYouChirps
             ->concat($followingChirps)
             ->pluck('id')
@@ -46,10 +47,23 @@ class ChirpController extends Controller
             ->flip()
         : collect();
 
+        $suggestedUsers = $user
+            ? User::query()
+            ->where('id', '!=', $user->id)
+            ->whereNotIn(
+                'id',
+                $user->following()->select('users.id')
+            )
+            ->latest()
+            ->take(3)
+            ->get()
+            : collect();
+
         return view('home', [
             'forYouChirps' => $forYouChirps,
             'followingChirps' => $followingChirps,
             'likedChirpIds' => $likedChirpIds,
+            'suggestedUsers' => $suggestedUsers
         ]);
     }
 
