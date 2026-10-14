@@ -11,7 +11,8 @@
         {{-- Timeline --}}
         <div class="max-w-3xl w-full mx-auto">
             <x-timeline
-                :chirps="$chirps"
+                :forYouChirps="$forYouChirps"
+                :followingChirps="$followingChirps"
                 :liked-chirp-ids="$likedChirpIds"
             />
         </div>
