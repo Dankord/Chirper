@@ -17,6 +17,8 @@ Route::view('/login', 'auth.login')->middleware('guest')->name('login');
 Route::post('/login', Login::class)->middleware('guest');
 Route::post('/logout', Logout::class)->middleware('auth')->name('logout');
 
+Route::get('/explore', [ChirpController::class, 'explore'])->name('explore');
+
 Route::middleware(['auth'])->group(function() {
     // Chirp logic
     Route::resource('chirps', ChirpController::class)->only(['store', 'edit', 'update', 'destroy']);
@@ -30,9 +32,6 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/users/{user}/follow', [FollowController::class, 'toggle'])->name('users.follow');
 
     // Upcoming
-    Route::view('/explore', function() {
-        return 'explore';
-    })->name('explore');
     Route::view('/notif', function() {
         return 'Notifications';
     })->name('notifications');
