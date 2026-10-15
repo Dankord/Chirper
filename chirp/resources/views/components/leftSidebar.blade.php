@@ -1,7 +1,6 @@
 @php
     $navigations = [
         ['title' => 'Home', 'icon' => 'house', 'route' => 'home'],
-        ['title' => 'Explore', 'icon' => 'compass', 'route' => 'explore'],
         ['title' => 'Notifications', 'icon' => 'bell', 'route' => 'notifications'],
         ['title' => 'Bookmarks', 'icon' => 'bookmark', 'route' => 'bookmarks'],
     ];
@@ -13,12 +12,26 @@
             'route' => 'profile',
             'params' => ['user' => auth()->user()]
         ];
+
+        $navigations[] =  [
+            'title' => 'Explore',
+            'icon' => 'compass',
+            'route' => 'explore',
+            'params' => []
+        ];
     } else {
         $navigations[] = [
             'title' => 'Profile',
             'icon' => 'user-round',
-            'route' => 'login',
-            'params' => [],
+            'route' => 'profile',
+            'params' => []
+        ];
+
+        $navigations[] =  [
+            'title' => 'Explore',
+            'icon' => 'compass',
+            'route' => 'explore',
+            'params' => []
         ];
     }
 @endphp

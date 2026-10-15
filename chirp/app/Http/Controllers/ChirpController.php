@@ -139,4 +139,9 @@ class ChirpController extends Controller
             'profile' => $user->profile()->firstOrCreate()
         ]);
     }
+
+    public function explore()
+    {
+        return view('explore.explore');
+    }
 }
