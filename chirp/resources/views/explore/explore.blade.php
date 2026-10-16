@@ -9,7 +9,10 @@
             </div>
         </aside>
         <div class="max-w-3xl w-full mx-auto">
-            <x-explore.discover />
+            <x-explore.discover
+                :chirpsToday="$chirpsToday"
+                :trendingTopics="$trendingTopics"
+            />
         </div>
         <aside class='p-4 bg-amber-400'>
             <div class='sticky top-20'>

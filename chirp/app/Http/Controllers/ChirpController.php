@@ -142,6 +142,38 @@ class ChirpController extends Controller
 
     public function explore()
     {
-        return view('explore.explore');
+        // totla chirp today
+        $chirpsToday = Chirp::whereDate('created_at', now())
+            ->count();
+
+        // Get chirps that is within 7 days
+        $recentChirps = Chirp::where(
+            'created_at',
+            '>=',
+            now()->subDays(7)
+        )->get(['id', 'message']);
+
+        //get the trending topics
+        $trendingTopics = $recentChirps
+            ->flatMap(function($chirp) {
+                preg_match_all(
+                    '/(?<![\p{L}\p{N}_])#([\p{L}\p{N}_]+)/u',
+                    $chirp->message,
+                    $matches
+                );
+                return collect($matches[1])
+                    ->map(fn ($tag) => mb_strtolower($tag))
+                    ->unique();
+            })
+            ->countBy()
+            ->sortDesc()
+            ->map(fn($count, $tag) => [
+                'title' => $tag,
+                'value' => $count
+            ])
+            ->values()
+            ->take(4);
+
+        return view('explore.explore', compact('chirpsToday', 'trendingTopics'));
     }
 }
