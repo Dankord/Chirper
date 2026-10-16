@@ -23,7 +23,7 @@
         $navigations[] = [
             'title' => 'Profile',
             'icon' => 'user-round',
-            'route' => 'profile',
+            'route' => 'login',
             'params' => []
         ];
 

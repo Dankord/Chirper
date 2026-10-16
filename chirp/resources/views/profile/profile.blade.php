@@ -4,7 +4,7 @@
     </x:slot:title>
     <div class="max-w-4xl mx-auto">
         <div class=" flex justify-start pb-2">
-            <a href="{{ route('home') }}" class="btn btn-ghost flex items-center text-xs text-base-content/60"><x-lucide-move-left class="size-4"/>Back to timeline</a>
+            <a href="{{ route('home') }}" class="btn btn-ghost flex items-center text-xs text-base-content/50"><x-lucide-move-left class="size-4"/>Back to timeline</a>
         </div>
         <div class="relative">
             <div class="h-48 bg-black rounded-t-2xl -bottom-16">

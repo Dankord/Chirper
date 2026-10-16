@@ -1,3 +1,8 @@
+@props(['chirpsToday', 'trendingTopics'])
+
+<div class="flex justify-start">
+    <a href="{{ route('home')}}" class="btn btn-ghost flex items-center p-0 gap-2 text-xs text-base-content/50 px-1"><x-lucide-move-left class="size-4" />Back to timeline</a>
+</div>
 <h3 class="text-md text-base-content/50">Discover something New</h3>
 <h1 class='text-3xl font-extrabold'>Explore</h1>
 
@@ -25,7 +30,7 @@
         </div>
         <div class="flex justify-between px-10 py-4">
             <div>
-                <h1 class="font-bold text-2xl">3.8k</h1>
+                <h1 class="font-bold text-2xl">{{ $chirpsToday }}</h1>
                 <h3 class="text-xs text-base-content/60">New Chirps today</h3>
             </div>
             <div>
@@ -48,30 +53,21 @@
                 <h1 class="font-extrabold text-2xl">Trending Topics</h1>
             </div>
             <div>
-            <a href="#" class="font-bold hover:underline">Refresh</a>
+            <a href="{{ url()->current() }}" class="font-bold hover:underline">Refresh</a>
             </div>
         </div>
         <div class="grid grid-cols-2 pt-4 gap-4">
+        @forelse($trendingTopics as $topic)
             <x-statCard
-                number="01"
-                title="Formula1"
-                value="12.3k"
+                :number="sprintf('%02d', $loop->iteration)"
+                :title="$topic['title']"
+                :value="$topic['value']"
             />
-            <x-statCard
-                number="02"
-                title="Laravel"
-                value="4,485"
-            />
-            <x-statCard
-                number="03"
-                title="GRIPPI"
-                value="12.5k"
-            />
-            <x-statCard
-                number="04"
-                title="BOMBACLAT"
-                value="1,459"
-            />
+        @empty
+            <div class="flex text-center justify-center">
+                <h1 class="text-sm text-base-content/60">No trending topics yet.</h1>
+            </div>
+        @endforelse
         </div>
     </div>
 </div>
