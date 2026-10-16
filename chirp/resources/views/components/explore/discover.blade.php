@@ -1,6 +1,6 @@
 @props(['chirpsToday', 'trendingTopics'])
 
-<div class="flex justify-start">
+<div class="flex justify-start pb-4">
     <a href="{{ route('home')}}" class="btn btn-ghost flex items-center p-0 gap-2 text-xs text-base-content/50 px-1"><x-lucide-move-left class="size-4" />Back to timeline</a>
 </div>
 <h3 class="text-md text-base-content/50">Discover something New</h3>
