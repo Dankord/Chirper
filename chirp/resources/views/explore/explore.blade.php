@@ -9,12 +9,18 @@
             </div>
         </aside>
         <div class="max-w-3xl w-full mx-auto">
+            <div class="flex justify-start pb-2">
+                <a href="{{ route('home')}}" class="btn btn-ghost flex items-center p-0 gap-2 text-xs text-base-content/50 px-1"><x-lucide-move-left class="size-4" />Back to timeline</a>
+            </div>
+            <h3 class="text-md text-base-content/50">Discover something New</h3>
+            <h1 class='text-3xl font-extrabold'>Explore</h1>
+            <x-explore.searchBar />
             <x-explore.discover
                 :chirpsToday="$chirpsToday"
                 :trendingTopics="$trendingTopics"
             />
         </div>
-        <aside class='p-4 bg-amber-400'>
+        <aside class='p-4'>
             <div class='sticky top-20'>
                 <x-explore.exploreRightSidebar />
             </div>
