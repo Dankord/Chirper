@@ -1,27 +1,5 @@
 @props(['chirpsToday', 'trendingTopics'])
 
-<div class="flex justify-start pb-4">
-    <a href="{{ route('home')}}" class="btn btn-ghost flex items-center p-0 gap-2 text-xs text-base-content/50 px-1"><x-lucide-move-left class="size-4" />Back to timeline</a>
-</div>
-<h3 class="text-md text-base-content/50">Discover something New</h3>
-<h1 class='text-3xl font-extrabold'>Explore</h1>
-
-{{-- Search function --}}
-<div class="pt-5">
-    <form method="POST" action="/search">
-        @csrf
-        <div class="relative">
-        <x-lucide-search class="absolute size-4 left-3 top-1/2 -translate-y-1/2 text-base-content/50" />
-        <input
-            type="text"
-            name="search"
-            placeholder="Search topics, people, or chirps"
-            class="bg-base-100 border-none w-full rounded-xl pl-10 p-2 shadow text-sm"
-        />
-        </div>
-    </form>
-</div>
-{{-- Statistics --}}
 <div class="card pt-5">
     <div class="card-body shadow gap-0 p-0 border rounded-xl">
         <div class="bg-amber-300 px-5 py-4 rounded-t-xl">
@@ -46,7 +24,7 @@
 </div>
 {{-- Topic card --}}
 <div class="card pt-5">
-    <div class="card-body shadow gap-0">
+    <div class="card-body shadow gap-0 bg-base-100 rounded-xl">
         <div class="flex justify-between items-center">
             <div>
                 <h3 class="text-base-content/50 text-xs">POPULAR RIGHT NOW</h3>
