@@ -15,10 +15,14 @@
             <h3 class="text-md text-base-content/50">Discover something New</h3>
             <h1 class='text-3xl font-extrabold'>Explore</h1>
             <x-explore.searchBar />
-            <x-explore.discover
-                :chirpsToday="$chirpsToday"
-                :trendingTopics="$trendingTopics"
-            />
+            @if (request()->filled('search'))
+                <x-searchResult />
+            @else
+                <x-explore.discover
+                    :chirpsToday="$chirpsToday"
+                    :trendingTopics="$trendingTopics"
+                />
+            @endif
         </div>
         <aside class='p-4'>
             <div class='sticky top-20'>

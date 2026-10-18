@@ -140,7 +140,7 @@ class ChirpController extends Controller
         ]);
     }
 
-    public function explore()
+    public function explore(Request $request)
     {
         // totla chirp today
         $chirpsToday = Chirp::whereDate('created_at', now())
@@ -174,6 +174,30 @@ class ChirpController extends Controller
             ->values()
             ->take(4);
 
-        return view('explore.explore', compact('chirpsToday', 'trendingTopics'));
+        // search functionality
+        $search = trim((string) $request->query('search', ''));
+
+        $searchChirps = null;
+        $searchUsers = collect();
+
+        if ($search !== '') {
+            $searchChirps = Chirp::with('user')
+                ->withCount('likedByUsers')
+                ->where('message', 'like', "%{$search}%")
+                ->latest()
+                ->paginate(10)
+                ->withQueryString();
+
+            $searchUsers = User::where('name', 'like', "%{$search}%")
+                ->take(5)
+                ->get();
+        }
+
+        return view('explore.explore', compact(
+            'chirpsToday',
+            'trendingTopics',
+            'searchChirps',
+            'searchUsers'
+        ));
     }
 }
