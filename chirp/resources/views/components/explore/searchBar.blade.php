@@ -1,5 +1,5 @@
 <div class="pt-4">
-    <form method="GET" action="{{ route('explore') }}>
+    <form method="GET" action="{{ route('explore') }}">
         <div class="relative">
         <x-lucide-search class="absolute size-4 left-3 top-1/2 -translate-y-1/2 text-base-content/50" />
         <input
