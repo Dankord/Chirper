@@ -52,7 +52,7 @@
                             </div>
                             <form method="POST" action="{{ route( 'users.follow', $suggestedUser ) }}" class="follow-form shrink-0">
                                 @csrf
-                                <button type="submit" class="follow-button btn btn-primary btn-sm rounded-3xl" aria-pressed="false">
+                                <button type="submit" class="follow-button btn btn-primary btn-sm rounded-3xl hover:bg-black/70" aria-pressed="false">
                                     <span class="follow-label">Follow</span>
                                 </button>
                             </form>

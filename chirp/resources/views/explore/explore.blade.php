@@ -16,7 +16,11 @@
             <h1 class='text-3xl font-extrabold'>Explore</h1>
             <x-explore.searchBar />
             @if (request()->filled('search'))
-                <x-searchResult />
+                <x-searchResult
+                    :search="$search"
+                    :chirps="$searchChirps"
+                    :users="$searchUsers"
+                />
             @else
                 <x-explore.discover
                     :chirpsToday="$chirpsToday"
