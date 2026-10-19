@@ -179,6 +179,7 @@ class ChirpController extends Controller
 
         $searchChirps = null;
         $searchUsers = collect();
+        $likedChirpsIds = null;
 
         if ($search !== '') {
             $searchChirps = Chirp::with('user')
@@ -191,13 +192,25 @@ class ChirpController extends Controller
             $searchUsers = User::where('name', 'like', "%{$search}%")
                 ->take(5)
                 ->get();
+            /** @var \App\Models\User $currentUser */
+            $currentUser = Auth::user();
+
+            $likedChirpsIds = $currentUser ?
+                $currentUser
+                ->likedChirps()
+                ->whereIn('chirp_id', $searchChirps->pluck('id'))
+                ->pluck('chirp_id')
+                ->flip()
+                : collect();
         }
 
         return view('explore.explore', compact(
             'chirpsToday',
             'trendingTopics',
+            'search',
             'searchChirps',
-            'searchUsers'
+            'searchUsers',
+            'likedChirpsIds'
         ));
     }
 }
