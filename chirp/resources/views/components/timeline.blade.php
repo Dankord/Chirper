@@ -56,7 +56,7 @@
                 :liked-chirp-ids="$likedChirpIds"
             />
             @empty
-            <div class="hero p-y-12">
+            <div class="hero py-12">
                 <div class="hero-content text-center">
                     <div>
                         <svg class="mx-auto h-12 w-12 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -9,9 +9,21 @@
             </div>
         </aside>
         <div class="max-w-3xl w-full mx-auto">
+        @if(request()->filled('search'))
             <div class="flex justify-start pb-2">
-                <a href="{{ route('home')}}" class="btn btn-ghost flex items-center p-0 gap-2 text-xs text-base-content/50 px-1"><x-lucide-move-left class="size-4" />Back to timeline</a>
+                <a href="{{ route('explore') }}" class="btn btn-ghost flex gap-2 text-sm p-0 px-1 text-base-content/50">
+                    <x-lucide-move-left class="size-4"/>
+                    Return to explore
+                </a>
             </div>
+        @else
+            <div class="flex justify-start pb-2">
+                <a href="{{ route('home')}}" class="btn btn-ghost flex items-center p-0 gap-2 text-xs text-base-content/50 px-1">
+                <x-lucide-move-left class="size-4" />
+                Back to timeline
+            </a>
+            </div>
+        @endif
             <h3 class="text-md text-base-content/50">Discover something New</h3>
             <h1 class='text-3xl font-extrabold'>Explore</h1>
             <x-explore.searchBar />
@@ -20,6 +32,7 @@
                     :search="$search"
                     :chirps="$searchChirps"
                     :users="$searchUsers"
+                    :liked-chirps-ids="$likedChirpsIds"
                 />
             @else
                 <x-explore.discover
