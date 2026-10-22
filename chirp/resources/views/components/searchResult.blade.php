@@ -1,4 +1,4 @@
-@props(['search', 'chirps', 'users'])
+@props(['search', 'chirps', 'users','likedChirpsIds'])
 
 <div class="py-5">
     <h1 class="text-3xl font-semibold ">Search Results</h1>
@@ -47,6 +47,17 @@
     </div>
 </div>
 
-<div>
-    {{-- Make the chirps view --}}
+<div class="space-y-4 pt-5">
+    @forelse($chirps as $chirp)
+        <x-chirp
+            :chirp="$chirp"
+            :likedChirpsIds="$likedChirpsIds"
+        />
+    @empty
+    <div class="hero py-12">
+        <div class="hero-content text-center">
+            <h2 class="text-3xl text-base-content/50">No similar Chirp has been said!</h2>
+        </div>
+    </div>
+    @endforelse
 </div>

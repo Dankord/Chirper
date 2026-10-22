@@ -17,3 +17,7 @@
         </div>
     </div>
 </div>
+
+<div class="footer footer-center pt-10 text-xs">
+    <p>@ {{ date('Y') }} Chirper - Built with Laravel</p>
+</div>
