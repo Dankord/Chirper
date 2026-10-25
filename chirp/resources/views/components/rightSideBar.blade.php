@@ -3,12 +3,13 @@
 <div class="flex justify-center mt-5">
     <div class="flex flex-col gap-3 w-80">
         <div class="shadow">
-            <form method="POST" action="/search">
+            <form method="POST" action="{{ route('home') }}">
                 @csrf
                 <div class="relative">
                     <x-lucide-search class="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-gray-400" />
                     <input type="text"
                        name="search"
+                       value='{{ request('search') }}'
                        placeholder="Search Chirper..."
                        class="bg-base-100 border-0 w-full rounded-xl p-2 pl-10"
                     />
