@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Chirp;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Services\ChirpInteractionService;
+use App\Services\ChirpSearchService;
 
 class ChirpController extends Controller
 {
-    public function index()
+    public function index(Request $request, ChirpInteractionService $interactionService, ChirpSearchService $searchService)
     {
         // For you
         $forYouChirps = Chirp::with('user')
@@ -39,13 +41,7 @@ class ChirpController extends Controller
             ->pluck('id')
             ->unique();
 
-        $likedChirpIds = $user ?
-            $user
-            ->likedChirps()
-            ->whereIn('chirp_id', $chirpIds)
-            ->pluck('chirp_id')
-            ->flip()
-        : collect();
+        $likedChirpIds = $interactionService->getLikedChirpIds($user, $chirpIds);
 
         $suggestedUsers = $user
             ? User::query()
@@ -59,11 +55,35 @@ class ChirpController extends Controller
             ->get()
             : collect();
 
+        $search = trim((string) $request->query('search', ''));
+        $searchChirps = null;
+        $searchUsers = collect();
+        $searchLikedChirpsIds = collect();
+
+
+        if($search != '') {
+            $results = $searchService->search($search);
+
+            $searchChirps = $results['chirps'];
+            $searchUsers = $results['users'];
+
+            /** @var \App\Models\User $currentUser */
+            $currentUser = Auth::user();
+            $searchLikedChirpsIds = $interactionService->getLikedChirpIds($currentUser, $searchChirps);
+        }
+
         return view('home', [
+            // timeline
             'forYouChirps' => $forYouChirps,
             'followingChirps' => $followingChirps,
             'likedChirpIds' => $likedChirpIds,
-            'suggestedUsers' => $suggestedUsers
+            'suggestedUsers' => $suggestedUsers,
+
+            // search
+            'search' => $search,
+            'searchChirps' => $searchChirps,
+            'searchUsers' => $searchUsers,
+            'searchLikedChirpsIds' => $searchLikedChirpsIds
         ]);
     }
 
@@ -110,7 +130,7 @@ class ChirpController extends Controller
         return redirect('/')->with('success', 'Successfully Deleted!');
     }
 
-    public function profile(User $user) {
+    public function profile(User $user, ChirpInteractionService $interactionService) {
         // The user profile we visit/viewing
         $user->loadCount(['followers', 'following']);
 
@@ -124,13 +144,7 @@ class ChirpController extends Controller
         /** @var \App\Models\User $currentUser */
         $currentUser = Auth::user();
 
-        $likedChirpIds = $currentUser ?
-            $currentUser
-            ->likedChirps()
-            ->whereIn('chirp_id', $userChirp->pluck('id'))
-            ->pluck('chirp_id')
-            ->flip()
-            : collect();
+        $likedChirpIds = $interactionService->getLikedChirpIds($currentUser, $userChirp->pluck('id'));
 
         return view('profile.profile', [
             'user' => $user,
@@ -140,7 +154,7 @@ class ChirpController extends Controller
         ]);
     }
 
-    public function explore(Request $request)
+    public function explore(Request $request, ChirpInteractionService $interactionService, ChirpSearchService $searchService)
     {
         // totla chirp today
         $chirpsToday = Chirp::whereDate('created_at', now())
@@ -179,29 +193,18 @@ class ChirpController extends Controller
 
         $searchChirps = null;
         $searchUsers = collect();
-        $likedChirpsIds = null;
+        $likedChirpsIds = collect();
 
         if ($search !== '') {
-            $searchChirps = Chirp::with('user')
-                ->withCount('likedByUsers')
-                ->where('message', 'like', "%{$search}%")
-                ->latest()
-                ->paginate(10)
-                ->withQueryString();
+            $results = $searchService->search($search);
 
-            $searchUsers = User::where('name', 'like', "%{$search}%")
-                ->take(5)
-                ->get();
+            $searchChirps = $results['chirps'];
+            $searchUsers = $results['users'];
+
             /** @var \App\Models\User $currentUser */
             $currentUser = Auth::user();
 
-            $likedChirpsIds = $currentUser ?
-                $currentUser
-                ->likedChirps()
-                ->whereIn('chirp_id', $searchChirps->pluck('id'))
-                ->pluck('chirp_id')
-                ->flip()
-                : collect();
+            $likedChirpsIds = $interactionService->getLikedChirpIds($currentUser, $searchChirps->pluck('id'));
         }
 
         return view('explore.explore', compact(

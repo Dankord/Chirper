@@ -9,6 +9,10 @@
             </div>
         </aside>
         {{-- Timeline --}}
+        @if(request()->filled('search')) {
+            {{-- <x-searchResult /> --}}
+        }
+        @else
         <div class="max-w-3xl w-full mx-auto">
             <x-timeline
                 :forYouChirps="$forYouChirps"
@@ -16,6 +20,7 @@
                 :liked-chirp-ids="$likedChirpIds"
             />
         </div>
+        @endif
         <aside class='p-4'>
             <div class="sticky top-20">
                 <x-rightSideBar
